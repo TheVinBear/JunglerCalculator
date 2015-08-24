@@ -1,16 +1,4 @@
-/* To Do:
- * 	Insert other champions statistics into Constructor if-else statement.
- *	Create a way to track time, both for attack speed purposes, and output.
- *	Look into Threads
- *	put attack method in the champion and monster classes.
- *
- *Activity Log:
- *8/7/15 : Added more champion base stats to constructors. Added Armor calculation into attack method.
- *8/9/15 : Initialized jungle monsters individually with their stats.
- *
- *
- *
-*/
+//Current Build
 public class JunglerCalculator 
 {
 	public static void main(String[] args) 
