@@ -1,4 +1,10 @@
-//JunglerCalculator at simplest form. Creates 1 monster with total jungle hp, and Champion(Warwick) to autoattack it to death.
+import java.util.concurrent.atomic.AtomicInteger;
+
+//JunglerCalculator at simplest form. 
+//Create hpMonster (Monster with full jungle HP)
+//Create Champion(Warwick) to attack the jungle.
+//Perform attacks and Display AttackCounter and Time.
+//New Version with threads
 public class JunglerCalculator 
 {
 	public static void main(String[] args) 
@@ -12,28 +18,28 @@ public class JunglerCalculator
 		//Champion attacks the jungle until it is dead. Keeps count of how many attacks are performed.
 		//Initialize the total attack counter, global timer, and attack timers.
 		//Need to rethink how I'll handle the timers, look into threads.
-		int attackCounter = 0;
-		double globalTimer = 115;
-		double attackTimer = 0;
+		AtomicInteger attackCounter = new AtomicInteger();
+		AtomicInteger globalTimer = new AtomicInteger(115);
+		AtomicInteger attackTimer = new AtomicInteger();
 		
 		//Attack the jungle.  
 		do
 		{
 			//Increment the global and attack timers.
-			globalTimer += 0.001;
-			attackTimer += 0.001;
+			globalTimer.addAndGet(1);
+			attackTimer.addAndGet(1);
 			
 			//Makes the Champion attack if the attack cooldown is over.
-			if(attackTimer >= player1.atkSpd)
+			if((attackTimer.get() / 1000) >= player1.atkSpd)
 			{
 				//Champion performs an attack to decrement the target's HP.
 				player1.autoattack(target);
 				//Increment the attack counter.
-				attackCounter++;
+				attackCounter.addAndGet(1);
 				//Displays the Current simulation time, current attack counter, and target HP.
-				System.out.println("Time: " + displayTime(globalTimer) + ". Attack: " + attackCounter + ". EnemyHP: " + target.hp);
+				System.out.println("Time: " + displayTime(globalTimer.get() / 1000) + ". Attack: " + attackCounter + ". EnemyHP: " + target.hp);
 				//Resets the attack timer.
-				attackTimer = 0;
+				attackTimer.set(0);;
 			}
 		}
 		while(target.hp > 1);		
